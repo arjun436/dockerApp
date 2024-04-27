@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myfirstpod
+  labels:
+    app: python
+spec:
+  containers:
+    - name: myfirstpod
+      image: arjun436/flaskapp:latest

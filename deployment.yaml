@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myfirstpodrs
+  labels:
+    app: python
+spec:
+  template:
+    metadata:
+      name: myfirstpod
+      labels:
+        app: python
+    spec:
+        containers:
+          - name: myfirstpod
+            image: arjun436/flaskapp:latest
+            ports:
+              - containerPort: 80
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python
