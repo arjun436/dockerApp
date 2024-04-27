@@ -71,3 +71,48 @@ CMD python main.py
 # https://hub.docker.com/r/selenium/standalone-chrome/#!
 # docker pull selenium/standalone-chrome
 # docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+# to run the tests and view in VNC viewer set 7900 to 5900 and run the command
+# docker run -d -p 4444:4444 -p 5900:5900 --shm-size="2g" selenium/standalone-chrome:latest
+
+###############################################################################################
+# Selenium Grid steps
+#
+# 1.  pull images of selenium hub
+# https://hub.docker.com/r/selenium/hub/
+# docker pull selenium/hub
+# 
+#
+# 2. pull selenium node clients for edge and chrome and firefod
+# https://hub.docker.com/r/selenium/node-chrome
+# docker pull selenium/node-chrome
+# https://hub.docker.com/r/selenium/node-edge
+# docker pull selenium/node-edge
+# https://hub.docker.com/r/selenium/node-firefox
+# docker pull selenium/node-firefox
+#   
+# 3. start docker network create grid network
+# docker network create grid
+#
+# 4. create and run the containers and link them
+#
+#
+# 2. Start the Hub using the created network
+# docker run -d -p 4442-4444:4442-4444 --net grid --name selenium-hub selenium/hub:latest
+# 3. Start the Node using the created network
+# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+#     --shm-size="2g" \
+#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+#     selenium/node-chrome:latest
+
+# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+#     --shm-size="2g" \
+#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+#     selenium/node-edge:latest
+
+# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
+#     --shm-size="2g" \
+#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
+#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
+#     selenium/node-firefox:latest
