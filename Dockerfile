@@ -91,28 +91,20 @@ CMD python main.py
 # docker pull selenium/node-firefox
 #   
 # 3. start docker network create grid network
-# docker network create grid
+# docker network create gridnetwork
 #
 # 4. create and run the containers and link them
+# docker run -d -p 4442-4444:4442-4444 --net gridnetwork --name SeleniumHub selenium/hub:latest 
+# -d is detached mode is like running in background, -p is port, --net is network name, --name container named in command, image name
 #
-#
-# 2. Start the Hub using the created network
+# Start the Hub using the created network
 # docker run -d -p 4442-4444:4442-4444 --net grid --name selenium-hub selenium/hub:latest
-# 3. Start the Node using the created network
-# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
-#     --shm-size="2g" \
-#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
-#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
-#     selenium/node-chrome:latest
-
-# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
-#     --shm-size="2g" \
-#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
-#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
-#     selenium/node-edge:latest
-
-# docker run -d --net grid -e SE_EVENT_BUS_HOST=selenium-hub \
-#     --shm-size="2g" \
-#     -e SE_EVENT_BUS_PUBLISH_PORT=4442 \
-#     -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 \
-#     selenium/node-firefox:latest
+# 
+# Start the Node using the created network
+# docker run -d --net gridnetwork -e SE_EVENT_BUS_HOST=SeleniumHub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-chrome:latest
+# docker run -d --net gridnetwork -e SE_EVENT_BUS_HOST=SeleniumHub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-firefox:latest
+# docker run -d --net gridnetwork -e SE_EVENT_BUS_HOST=SeleniumHub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-edge:latest
+#
+# 
+#
+# 
