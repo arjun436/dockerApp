@@ -106,5 +106,6 @@ CMD python main.py
 # docker run -d --net gridnetwork -e SE_EVENT_BUS_HOST=SeleniumHub --shm-size="2g" -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-edge:latest
 #
 # 
-#
-# 
+# compose a docker-compose.yaml and run following code to run all above commands in a yaml file
+# docker compose up
+# docker compose down
